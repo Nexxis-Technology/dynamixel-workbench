@@ -628,6 +628,8 @@ bool DynamixelWorkbench::setOperatingMode(uint8_t id, uint8_t index, const char 
     {
       if (!strncmp(model_name, "XM", strlen("XM"))             ||
           !strncmp(model_name, "XH", strlen("XH"))             ||
+          !strncmp(model_name, "XL330", strlen("XL330"))       ||
+          !strncmp(model_name, "XC330", strlen("XC330"))       ||
           !strncmp(model_name, "MX-64-2", strlen("MX-64-2"))   ||
           !strncmp(model_name, "MX-106-2", strlen("MX-106-2")) ||
           !strncmp(model_name, "RH", strlen("RH")))
@@ -695,6 +697,8 @@ bool DynamixelWorkbench::setOperatingMode(uint8_t id, uint8_t index, const char 
     {
       if (!strncmp(model_name, "XM", strlen("XM"))             ||
           !strncmp(model_name, "XH", strlen("XH"))             ||
+          !strncmp(model_name, "XL330", strlen("XL330"))       ||
+          !strncmp(model_name, "XC330", strlen("XC330"))       ||
           !strncmp(model_name, "MX-64-2", strlen("MX-64-2"))   ||
           !strncmp(model_name, "MX-106-2", strlen("MX-106-2")) ||
           !strncmp(model_name, "RH", strlen("RH")))
