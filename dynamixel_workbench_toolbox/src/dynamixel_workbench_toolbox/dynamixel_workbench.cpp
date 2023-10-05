@@ -1326,97 +1326,58 @@ float DynamixelWorkbench::convertValue2Velocity(uint8_t id, int32_t value)
 
 int16_t DynamixelWorkbench::convertCurrent2Value(uint8_t id, float current)
 {
-  float CURRENT_UNIT = 2.69f; //Unit : mA, Ref : http://emanual.robotis.com/docs/en/dxl/x/xm430-w350/#goal-current102
-
   model_info = getModelInfo(id);
   if (model_info == NULL) return false;
 
-  if (getProtocolVersion() == 1.0f)
+  float CURRENT_UNIT = 2.69f; //Unit : mA, Ref : http://emanual.robotis.com/docs/en/dxl/x/xm430-w350/#goal-current102
+  if (getProtocolVersion() == 2.0f)
   {
-      return (current / CURRENT_UNIT);
-  }
-  else if (getProtocolVersion() == 2.0f)
-  {
-    if (strncmp(getModelName(id), "PRO-L", strlen("PRO-L")) == 0 ||
-        strncmp(getModelName(id), "PRO-M", strlen("PRO-M")) == 0 ||
-        strncmp(getModelName(id), "PRO-H", strlen("PRO-H")) == 0)
-    {
-      CURRENT_UNIT = 16.11328f;
-      return (current / CURRENT_UNIT);
-    }
-    else if (strncmp(getModelName(id), "PRO-PLUS", strlen("PRO-PLUS")) == 0)
+    if (strncmp(getModelName(id), "XC330", strlen("XC330")) == 0 ||
+        strncmp(getModelName(id), "XL330", strlen("XL330")) == 0)
     {
       CURRENT_UNIT = 1.0f;
-      return (current / CURRENT_UNIT);
     }
-    else
+    else if (strncmp(getModelName(id), "XH430-V", strlen("XH430-V")) == 0)
     {
-      return (current / CURRENT_UNIT);
+      CURRENT_UNIT = 1.34f;
+    }
+    else if (strncmp(getModelName(id), "MX-106-2", strlen("MX-106-2")) == 0 ||
+             strncmp(getModelName(id), "MX-64-2", strlen("MX-64-2")) == 0)
+    {
+      CURRENT_UNIT = 3.36f;
     }
   }
 
-  return (current / CURRENT_UNIT);
-}
-
-int16_t DynamixelWorkbench::convertCurrent2Value(float current)
-{
-  int16_t value = 0;
-  const float CURRENT_UNIT = 2.69f; //Unit : mA, Ref : http://emanual.robotis.com/docs/en/dxl/x/xm430-w350/#goal-current102
-
-  value = current / CURRENT_UNIT;
-
-  return value;
+  return current / CURRENT_UNIT;
 }
 
 float DynamixelWorkbench::convertValue2Current(uint8_t id, int16_t value)
 {
-  float current = 0;
   float CURRENT_UNIT = 2.69f; //Unit : mA, Ref : http://emanual.robotis.com/docs/en/dxl/x/xm430-w350/#goal-current102
 
   model_info = getModelInfo(id);
   if (model_info == NULL) return false;
 
-  if (getProtocolVersion() == 1.0f)
+
+  if (getProtocolVersion() == 2.0f)
   {
-    current = (int16_t)value * CURRENT_UNIT;
-    return current;
-  }
-  else if (getProtocolVersion() == 2.0f)
-  {
-    if (strncmp(getModelName(id), "PRO-L", strlen("PRO-L")) == 0 ||
-        strncmp(getModelName(id), "PRO-M", strlen("PRO-M")) == 0 ||
-        strncmp(getModelName(id), "PRO-H", strlen("PRO-H")) == 0)
-    {
-      CURRENT_UNIT = 16.11328f;
-      current = (int16_t)value * CURRENT_UNIT;
-      return current;
-    }
-    else if (strncmp(getModelName(id), "PRO-PLUS", strlen("PRO-PLUS")) == 0)
+    if (strncmp(getModelName(id), "XC330", strlen("XC330")) == 0 ||
+        strncmp(getModelName(id), "XL330", strlen("XL330")) == 0)
     {
       CURRENT_UNIT = 1.0f;
-      current = (int16_t)value * CURRENT_UNIT;
-      return current;
     }
-    else
+    else if (strncmp(getModelName(id), "XH430-V", strlen("XH430-V")) == 0)
     {
-      current = (int16_t)value * CURRENT_UNIT;
-      return current;
+      CURRENT_UNIT = 1.34f;
+    }
+    else if (strncmp(getModelName(id), "MX-106-2", strlen("MX-106-2")) == 0 ||
+             strncmp(getModelName(id), "MX-64-2", strlen("MX-64-2")) == 0)
+    {
+      CURRENT_UNIT = 3.36f;
     }
   }
 
-  current = (int16_t)value * CURRENT_UNIT;
-
-  return current;
-}
-
-float DynamixelWorkbench::convertValue2Current(int16_t value)
-{
-  float current = 0;
-  const float CURRENT_UNIT = 2.69f; //Unit : mA, Ref : http://emanual.robotis.com/docs/en/dxl/x/xm430-w350/#goal-current102
-
-  current = (int16_t)value * CURRENT_UNIT;
-
-  return current;
+  return value * CURRENT_UNIT;
 }
 
 float DynamixelWorkbench::convertValue2Load(int16_t value)
